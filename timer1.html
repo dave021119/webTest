@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+
+  <title>基于时间维度的代码性能和异步技术优化的研究</title>
+  <style type="text/css">
+	ol{
+	 background-color:green;
+	 color:white;
+	}
+	li{
+	 margin-left:1em;
+	 font-size:3em;
+	}
+  </style>
+ </head>
+ <body>
+  <ol id='dad'>
+
+  </ol>
+
+ <script type="text/javascript">
+ <!--
+	//----时间戳的（ms定义）定义和案例.
+   
+   //1 . 本机的CPU计算性能的研究
+   //1.1 自编一个时间戳的模型，对未来的代码进行时间测算
+  var timer = {} ;
+  timer.begin = function(){
+     timer.bt = new Date(); 
+   };
+  timer.end = function(){
+      return new Date() - timer.bt ; 
+   };
+   
+   timer.begin() ;
+  for (let i=0; i < parseInt((new Date('2002/11/19')-0)/1000/60/60) ; i++){
+	  //do nothing
+   }
+   output("CPU计算我的当前人生时间戳：" + timer.end() + "ms!");
+
+//2 . 本机OS和浏览器的渲染和内存性能的研究
+ timer.begin();
+    var eStr ="" ;
+    var emoji = [[126976,127020],[127024,127124],[127136,127222],[127744,128722]] ;
+      for (let section = 0;  section< emoji.length; section++){
+        for (let code = emoji[section][0];code< emoji[section][1]; code++){
+          let char =String.fromCodePoint(code) ;
+           eStr += char ;
+        }	
+	  }
+   for (let i=0;i<30 ; i++)
+   {output(eStr);  
+   }
+    
+ output("OS和浏览器渲染所有emoji的时间：" + timer.end() + "ms!");
+//3 . 本机硬盘性能的研究
+ var files= ['CS.jpg' , 'CSS.jpg' , 'CT.jpg' , 'GRE.jpg' , 'Git.jpg' , 'NinjaJS.jpg' , 'STEM.jpg' , 'UML.jpg' , 'bitCoin.jpg' , 'canvas.jpg' , 'cssAnimation.jpg' , 'gitForTeams.jpg' , 'internet.jpg' , 'javaScript.jpg' , 'learnCSS.jpg' , 'linuxCMD.jpg' , 'logic.jpg' , 'nutrition.jpg' , 'webProgramming.jpg' ];
+  
+ timer.begin();
+  var imgDoms = [] ;
+  for (let file of files ) {
+     let imgDom = new Image() ;
+      imgDom.src = "lesson/" + file ; 
+	   imgDom.addEventListener('load',function(){
+	    output('图'+file+'硬盘读取时间：'+ timer.end()+'ms!');
+	   });
+	  imgDoms.push(imgDom);
+
+  } 
+  output("同步代码：硬盘开始读取的时间所有19个图形文件的时间：" + timer.end() + "ms!");
+//4 . 互联网络（外网）研究
+ timer.begin();
+  var remotefiles = ['CS.jpg' , 'CSS.jpg' , 'CT.jpg' , 'GRE.jpg' , 'Git.jpg' , 'NinjaJS.jpg' , 'STEM.jpg' , 'UML.jpg' , 'bitCoin.jpg' , 'canvas.jpg' , 'cssAnimation.jpg' , 'gitForTeams.jpg' , 'internet.jpg' , 'javaScript.jpg' , 'learnCSS.jpg' , 'linuxCMD.jpg' , 'logic.jpg' , 'nutrition.jpg' , 'webProgramming.jpg' ];
+  for (let file of remotefiles ) {
+     let imgDom = new Image() ;
+      imgDom.src = "https://masterlijh.github.io/lesson/" + file ; 
+	   imgDom.addEventListener('load',function(){
+	    output('图'+file+'远程网络读取时间：'+ timer.end()+'ms!');
+	   });
+	  imgDoms.push(imgDom);
+
+  } 
+  output("同步代码：开始向网络发起读取请求的时间的时间：" + timer.end() + "ms!");
+
+
+
+   function output(str){
+    var dad = document.getElementById('dad');
+	 
+	 var child = document.createElement('li');
+      child.textContent = str ;
+	 dad.appendChild(child); 
+   }
+ //-->
+ </script>
+ </body>
+
+</html>
